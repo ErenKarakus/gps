@@ -1,13 +1,16 @@
 // #include <iostream> // For debugging
 #include <stdexcept>
+#include <regex>
 
 #include "nmea-parser.h"
 
 namespace GPS::NMEA
 {
-  bool isSupportedFormat(std::string)
+  bool isSupportedFormat(std::string prefix)
   {
       // Stub definition, needs implementing
+      const std::regex re("(GLL|GGA|RMC)");
+      return std::regex_match (prefix, re);
       return false;
   }
 

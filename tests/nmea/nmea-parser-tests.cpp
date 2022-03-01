@@ -892,7 +892,7 @@ BOOST_AUTO_TEST_CASE( LargeFileGLL )
 }
 
 BOOST_AUTO_TEST_CASE( LargeFileGGA_RMC )
-{   
+{
     std::fstream sentences = openNMEAfile("gga_rmc-1.log");
     const unsigned int expectedSize = 632; // The header and blank line should be discarded
 
