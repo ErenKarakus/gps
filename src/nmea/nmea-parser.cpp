@@ -6,11 +6,11 @@
 
 namespace GPS::NMEA
 {
-  bool isSupportedFormat(std::string prefix)
+  bool isSupportedFormat(std::string tcc)
   {
       // Stub definition, needs implementing
-      const std::regex re("(GLL|GGA|RMC)");
-      return std::regex_match (prefix, re);
+      const std::regex reg("(GLL|GGA|RMC)");
+      return std::regex_match (tcc, reg);
       return false;
   }
 
