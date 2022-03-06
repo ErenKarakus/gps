@@ -6,11 +6,11 @@
 
 namespace GPS::NMEA
 {
-  bool isSupportedFormat(std::string tcc)
+  bool isSupportedFormat(std::string characterFormat)
   {
       // Stub definition, needs implementing
       const std::regex reg("(GLL|GGA|RMC)");
-      return std::regex_match (tcc, reg);
+      return std::regex_match (characterFormat, reg);
       return false;
   }
 
@@ -80,10 +80,24 @@ namespace GPS::NMEA
       return {"",{}};
   }
 
-  bool hasCorrectNumberOfFields(SentenceData)
+  bool hasCorrectNumberOfFields(SentenceData sentenceFields)
   {
       // Stub definition, needs implementing
-      return true;
+      int fieldAmount = sentenceFields.dataFields.size();
+
+      if (sentenceFields.format == "GLL" && fieldAmount == 5){
+          return true;
+      }
+      else if (sentenceFields.format == "GGA" && fieldAmount == 14) {
+          return true;
+      }
+      else if (sentenceFields.format == "RMC" && fieldAmount ==11) {
+          return true;
+      }
+      else {
+          return false;
+      }
+
   }
 
   Position positionFromSentenceData(SentenceData d)
