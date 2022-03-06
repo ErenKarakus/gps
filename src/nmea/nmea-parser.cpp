@@ -16,7 +16,7 @@ namespace GPS::NMEA
 
   bool hasValidSentenceStructure(std::string s)
   {
-      std::regex expression("(\\$GP)([A-Z]){3},(\\w|\\.|\\,){0,}\\*([A-F]|[a-f]|[0-9]){2}");
+      std::regex expression("(\\$GP)([A-Z]){3},(\\w|[.]|[,]){0,}\\*[[:xdigit:]]{2}");
       return std::regex_match(s, expression);
   }
 
