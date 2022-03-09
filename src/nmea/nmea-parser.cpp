@@ -60,79 +60,79 @@ namespace GPS::NMEA
 
   Position positionFromSentenceData(SentenceData d)
   {
-      using namespace std; // Ken: Writing 'std::' everywhere is irritating.
-      string la, lo, ns, ew, e;
-      char ns0, ew0;
+      //using namespace std; // Ken: Writing 'std::' everywhere is irritating.
+      std::string latitude, longitude, northSouth, eastWest, elevation;
+      char northSouth0, eastWest0;
       Position p = Position(0,0,0); // Dummy object becasue there's no default constructor available for Postion
       if (d.format == "GLL")
       {
-          la = d.dataFields[0];
-          lo = d.dataFields[2];
-          ns = d.dataFields[1];
-          ew = d.dataFields[3];
-          e = "0"; // no ele
-          if (ns.size() == 1) {
-              ns0 = ns[0];
+          latitude = d.dataFields[0];
+          longitude = d.dataFields[2];
+          northSouth = d.dataFields[1];
+          eastWest = d.dataFields[3];
+          elevation = "0"; // no ele
+          if (northSouth.size() == 1) {
+              northSouth0 = northSouth[0];
           } else {
-              throw domain_error(string("Ill-formed bearing in GLL sentence field: ") + ns + ". Bearings must be a single character.");
+              throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + northSouth + ". Bearings must be a single character.");
           }
-          if (ew.size() == 1) {
-              ew0 = ew[0];
+          if (eastWest.size() == 1) {
+              eastWest0 = eastWest[0];
           } else {
-              throw domain_error(string("Ill-formed bearing in GLL sentence field: ") + ew + ". Bearings must be a single character.");
+              throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + eastWest + ". Bearings must be a single character.");
           }
           try
           {
-                p = Position(la,ns0,lo,ew0,e);
+                p = Position(latitude,northSouth0,longitude,eastWest0,elevation);
           }
-          catch (const invalid_argument& e)
+          catch (const std::invalid_argument& e)
           {
-                throw domain_error(string("Ill-formed GLL sentence field: ") + e.what());
+                throw std::domain_error(std::string("Ill-formed GLL sentence field: ") + e.what());
           }
       }
       else if (d.format == "RMC")
       {
-          la = d.dataFields[2];
-          lo = d.dataFields[4];
-          ns = d.dataFields[3];
-          ew = d.dataFields[5];
-          e = "0"; // no ele
-          if (ns.size() != 1) {
-              throw domain_error(string("Ill-formed bearing in RMC sentence field: ") + ns + ". Bearings must be a single character.");
+          latitude = d.dataFields[2];
+          longitude = d.dataFields[4];
+          northSouth = d.dataFields[3];
+          eastWest = d.dataFields[5];
+          elevation = "0"; // no ele
+          if (northSouth.size() != 1) {
+              throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + northSouth + ". Bearings must be a single character.");
           } else {
-              ns0 = ns[0];
+              northSouth0 = northSouth[0];
           }
-          if (ew.size() != 1) {
-              throw domain_error(string("Ill-formed bearing in RMC sentence field: ") + ew + ". Bearings must be a single character.");
+          if (eastWest.size() != 1) {
+              throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + eastWest + ". Bearings must be a single character.");
           } else {
-              ew0 = ew[0];
+              eastWest0 = eastWest[0];
           }
           try {
-            p = Position(la,ns0,lo,ew0,e);
+            p = Position(latitude,northSouth0,longitude,eastWest0,elevation);
           }
-          catch (const invalid_argument& e) {
-            throw domain_error(string("Ill-formed RMC sentence field: ") + e.what());
+          catch (const std::invalid_argument& e) {
+            throw std::domain_error(std::string("Ill-formed RMC sentence field: ") + e.what());
           }
       } else if (d.format == "GGA")
       {
-          la = d.dataFields[1];
-          lo = d.dataFields[3];
-          ns = d.dataFields[2];
-          ew = d.dataFields[4];
-          e = d.dataFields[8];
-          if (ns.size() != 1) {
-              throw domain_error(string("Ill-formed bearing in GGA sentence field: ") + ns + ". Bearings must be a single character.");
+          latitude = d.dataFields[1];
+          longitude = d.dataFields[3];
+          northSouth = d.dataFields[2];
+          eastWest = d.dataFields[4];
+          elevation = d.dataFields[8];
+          if (northSouth.size() != 1) {
+              throw std::domain_error(std::string("Ill-formed bearing in GGA sentence field: ") + northSouth + ". Bearings must be a single character.");
           }
-          ns0 = ns[0];
-          if (ew.size() != 1) {
-              throw domain_error(string("Ill-formed bearing in GGA sentence field: ") + ew + ". Bearings must be a single character.");
+          northSouth0 = northSouth[0];
+          if (eastWest.size() != 1) {
+              throw std::domain_error(std::string("Ill-formed bearing in GGA sentence field: ") + eastWest + ". Bearings must be a single character.");
           }
-          ew0 = ew[0];
+          eastWest0 = eastWest[0];
           try {
-            p = Position(la,ns0,lo,ew0,e);
-          } catch (const invalid_argument& e)
+            p = Position(latitude,northSouth0,longitude,eastWest0,elevation);
+          } catch (const std::invalid_argument& e)
           {
-              throw domain_error(string("Ill-formed GGA sentence field: ") + e.what());
+              throw std::domain_error(std::string("Ill-formed GGA sentence field: ") + e.what());
           }
       }
       return p;
