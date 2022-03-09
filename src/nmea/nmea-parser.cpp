@@ -132,7 +132,7 @@ namespace GPS::NMEA
           }
 
           else {
-              throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + eastWest + ". Bearings must be a single character.");
+              throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + northSouth + ". Bearings must be a single character.");
           }
 
           if (eastWest.size() == 1) {
@@ -145,12 +145,15 @@ namespace GPS::NMEA
               else {
                   throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + eastWest + ". Bearings must be E or W.");
               }
+          }
+          else {
+              throw std::domain_error(std::string("Ill-formed bearing in RMC sentence field: ") + eastWest + ". Bearings must be a single character.");
+          }
               try {
                   p = Position(latitude,northSouth0,longitude,eastWest0,elevation);
               } catch (const std::invalid_argument& e) {
                   throw std::domain_error(std::string("Ill-formed RMC sentence field: ") + e.what());
               }
-          }
       }
 
       else if (d.format == "GGA")
