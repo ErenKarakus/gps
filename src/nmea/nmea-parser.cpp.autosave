@@ -76,6 +76,8 @@ namespace GPS::NMEA
           } else {
               throw domain_error(string("Ill-formed bearing in GLL sentence field: ") + ns + ". Bearings must be a single character.");
           }
+          
+          
           if (ew.size() == 1) {
               ew0 = ew[0];
           } else {
