@@ -11,7 +11,6 @@ namespace GPS::NMEA
       // Stub definition, needs implementing
       const std::regex reg("(GLL|GGA|RMC)");
       return std::regex_match (characterFormat, reg);
-      return false;
   }
 
   bool hasValidSentenceStructure(std::string s)
@@ -23,19 +22,40 @@ namespace GPS::NMEA
   bool checksumMatches(std::string s)
   {
       // Stub definition, needs implementing
-      std::regex expression("(?!\\$)(\\w|,|.)+\\*");
-      std::smatch matches;
-      std::string match;
+      int baseHex = 16;
+      int endPoint = s.length() - 2;
 
-      std::regex_search(s, matches, expression);
-      match = matches[0];
-      return false;
+      std::string subString = s.substr(endPoint);
+      int hexValues = std::stoul(subString, nullptr, baseHex);
+
+      int checksum = 0;
+      for(int i = 1; i < endPoint - 1; i++) {
+          checksum ^= s[i];
+      }
+
+      return (checksum == hexValues);
   }
 
-  SentenceData parseSentence(std::string)
+  SentenceData parseSentence(std::string s)
   {
       // Stub definition, needs implementing
-      return {"",{}};
+      std::string format = s.substr(3, 3);
+
+      std::vector<std::string> field;
+      std::string data = "";
+
+      for (int i =7 ;i <s.length() - 2; i++) {
+          char contents = s[i];
+          if((contents == ',')|| (contents == '*')){
+              field.push_back(data);
+              data = "";
+          }
+          else {
+              data = data + contents;
+          }
+
+      }
+      return {format, field};
   }
 
   bool hasCorrectNumberOfFields(SentenceData sentenceFields)
@@ -86,7 +106,7 @@ namespace GPS::NMEA
           }
 
           else {
-              throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + eastWest + ". Bearings must be a single character.");
+              throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + northSouth + ". Bearings must be a single character.");
           }
 
           if (eastWest.size() == 1) {
