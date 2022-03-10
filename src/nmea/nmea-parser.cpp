@@ -1,9 +1,8 @@
-// #include <iostream> // For debugging
 #include <stdexcept>
 #include <regex>
 
 #include "nmea-parser.h"
-//jenkins test
+
 namespace GPS::NMEA
 {
   bool isSupportedFormat(std::string characterFormat)
@@ -95,15 +94,13 @@ namespace GPS::NMEA
       std::string latitude, longitude, northSouth, eastWest, elevation;
       Position p = Position(0,0,0);
 
-      if (d.format == "GLL" && d.dataFields.size() == 5)
-      {
+      if (d.format == "GLL" && d.dataFields.size() == 5) {
           latitude = d.dataFields[0];
           longitude = d.dataFields[2];
           northSouth = d.dataFields[1];
           eastWest = d.dataFields[3];
           elevation = "0";
       }
-
       else if (d.format == "GGA" && d.dataFields.size() == 14) {
           latitude = d.dataFields[1];
           longitude = d.dataFields[3];
