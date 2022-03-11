@@ -81,7 +81,7 @@ namespace GPS::NMEA
   void sentenceBearing (std::string northSouth, std::string eastWest)
   {
       if (northSouth.size() != 1) {
-            throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + northSouth + ". Bearings must be a single character.");
+            throw std::domain_error(std::string("Ill-formed bearing in sentence field: ") + northSouth + ". Bearings must be a single character.");
       }
           else if (eastWest.size() != 1) {
               throw std::domain_error(std::string("Ill-formed bearing in GLL sentence field: ") + eastWest + ". Bearings must be a single character.");
@@ -94,6 +94,7 @@ namespace GPS::NMEA
       std::string latitude, longitude, northSouth, eastWest, elevation;
       Position p = Position(0,0,0);
 
+      //Data values assigned for output messages
       if (d.format == "GLL" && d.dataFields.size() == 5) {
           latitude = d.dataFields[0];
           longitude = d.dataFields[2];
@@ -121,10 +122,11 @@ namespace GPS::NMEA
 
       sentenceBearing(northSouth, eastWest);
 
+      //Throws a exception if the neccessary data fields contain invalid data
       try {
           p = Position(latitude,northSouth[0],longitude,eastWest[0],elevation);
       } catch (const std::invalid_argument& e) {
-          throw std::domain_error(std::string("Ill-formed GLL sentence field: ") + e.what());
+          throw std::domain_error(std::string("Ill-formed sentence field: ") + e.what());
       }
     return p;
   }
@@ -133,6 +135,7 @@ namespace GPS::NMEA
   {
       std::vector<Position> vector;
 
+      //While loop of file till no sentences are left
       while (true) {
           std::string validData;
           stream >> validData;
@@ -153,7 +156,9 @@ namespace GPS::NMEA
               if((isSupportedFormat(sentence.format))&&(hasValidSentenceStructure(validData))&&(checksumMatches(validData))) {
                   vector.push_back(positionFromSentenceData(sentence));
               }
-          } catch (const std::exception& ) {
+          }
+          //Catches inputs that are invalid
+          catch (const std::exception& ) {
           }
       }
       return vector;
