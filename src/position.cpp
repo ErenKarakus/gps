@@ -17,6 +17,9 @@ namespace GPS
       if (! isValidLongitude(lon))
           throw std::invalid_argument("Longitude values must not exceed " + std::to_string(antiMeridianLongitude) + " degrees.");
 
+      if (! Earth::isValidElevation(ele))
+          throw std::invalid_argument("Negative elevation values must not exceed the Earth's mean radius (i.e. must not be below the centre of the Earth).");
+
       this->lat = lat;
       this->lon = lon;
       this->ele = ele;

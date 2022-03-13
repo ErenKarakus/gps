@@ -9,6 +9,7 @@ namespace GPS
   namespace Earth
   {
       const Position NorthPole = Position(poleLatitude,0,0);
+      const Position SouthPole = Position(-poleLatitude,0,0);
       const Position EquatorialMeridian = Position(0,0,0);
       const Position EquatorialAntiMeridian = Position(0,antiMeridianLongitude,0);
       const Position CliftonCampus = Position(52.91249953,-1.18402513,58);
@@ -50,5 +51,11 @@ namespace GPS
               return (eastWestDistance / circumferenceAtThisLatitude) * fullRotation;
           }
       }
+
+      bool isValidElevation(metres elevation)
+      {
+          return elevation >= -meanRadius;
+      }
+
   }
 }

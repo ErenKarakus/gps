@@ -8,6 +8,7 @@ namespace GPS
   namespace Earth
   {
       extern const Position NorthPole;
+      extern const Position SouthPole;
       extern const Position EquatorialMeridian;
       extern const Position EquatorialAntiMeridian;
       extern const Position CliftonCampus;
@@ -43,6 +44,13 @@ namespace GPS
        * specified latitude.
        */
       degrees longitudeSubtendedBy(metres eastWestDistance, degrees lat);
+
+
+      /* Check that the elevation value is no lower than the centre of the Earth.
+       * No upper limit is imposed.
+       */
+      bool isValidElevation(metres);
+
   }
 }
 
