@@ -143,6 +143,12 @@ const std::string lonWithinBoundaryDDM = "18000.00";
 const degrees lonBeyondBoundary = 180.01;
 const std::string lonBeyondBoundaryDDM = "18000.60";
 
+const metres eleWithinBoundary = -6370000;
+const std::string eleWithinBoundaryDDM = std::to_string(eleWithinBoundary);
+
+const metres eleBelowBoundary = -6372000;
+const std::string eleBelowBoundaryDDM = std::to_string(eleBelowBoundary);
+
 ///////////////////////////////////////////////
 
 BOOST_AUTO_TEST_SUITE( NumericDD )
@@ -239,6 +245,20 @@ BOOST_AUTO_TEST_CASE( LongitudeWithinNegativeBoundary )
 BOOST_AUTO_TEST_CASE( LongitudeBeyondNegativeBoundary )
 {
    BOOST_CHECK_THROW( Position(lat,-lonBeyondBoundary,ele) , std::invalid_argument );
+}
+
+BOOST_AUTO_TEST_CASE( ElevationWithinBoundary )
+{
+    Position pos = Position(lat,lon,eleWithinBoundary);
+
+    BOOST_CHECK_CLOSE( pos.latitude(), lat, percentageAccuracy );
+    BOOST_CHECK_CLOSE( pos.longitude(), lon, percentageAccuracy );
+    BOOST_CHECK_CLOSE( pos.elevation(), eleWithinBoundary, percentageAccuracy );
+}
+
+BOOST_AUTO_TEST_CASE( ElevationBelowBoundary )
+{
+   BOOST_CHECK_THROW( Position(lat,lon,eleBelowBoundary) , std::invalid_argument );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -354,6 +374,18 @@ BOOST_AUTO_TEST_CASE( LongitudeZero )
     Position pos = Position(latDDM,n,ddmZero,e,eleStr);
 
     BOOST_CHECK_SMALL( pos.longitude(), absoluteAccuracy );
+}
+
+BOOST_AUTO_TEST_CASE( ElevationWithinBoundary )
+{
+    Position pos = Position(latDDM,n,lonDDM,e,eleWithinBoundaryDDM);
+
+    BOOST_CHECK_CLOSE( pos.elevation(), eleWithinBoundary, percentageAccuracy );
+}
+
+BOOST_AUTO_TEST_CASE( ElevationBelowBoundary )
+{
+   BOOST_CHECK_THROW( Position(latDDM,n,lonDDM,e,eleBelowBoundaryDDM) , std::invalid_argument );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
