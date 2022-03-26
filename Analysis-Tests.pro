@@ -11,13 +11,13 @@ HEADERS += \
     headers/geometry.h \
     headers/position.h \
     headers/types.h \
+    headers/waypoints.h \
     headers/analysis/analysis-route.h \
     headers/analysis/analysis-track.h \
     headers/gpx/gpx-parser.h \
     headers/gridworld/gridworld-model.h \
     headers/gridworld/gridworld-route.h \
     headers/gridworld/gridworld-track.h \
-    headers/waypoints.h \
     headers/xml/xml-element.h \
     headers/xml/xml-generator.h \
     headers/xml/xml-parser.h
