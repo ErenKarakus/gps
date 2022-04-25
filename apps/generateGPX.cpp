@@ -29,8 +29,8 @@ int main()
    /* Advanced Usage Examples - Configuring GridWorld settings  */
 
     Position posM = Position(50,30,2000); // Position of the central point 'M'.
-    metres northSouthGridUnit = 100000; // East/west distance between grid points.
-    metres eastWestGridUnit = 100000; // North/south distance between grid points.
+    metres northSouthGridUnit = 100000; // North/south distance between grid points.
+    metres eastWestGridUnit = 100000; // East/west distance between grid points.
     metres verticalGridUnit = 1000; // Vertical distance between grid levels.
 
     GridWorld::Model gwModel {posM, northSouthGridUnit, eastWestGridUnit, verticalGridUnit};
