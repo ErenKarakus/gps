@@ -35,7 +35,8 @@ SOURCES += \
     src/gridworld/gridworld-track.cpp \
     src/xml/xml-element.cpp \
     src/xml/xml-generator.cpp \
-    src/xml/xml-parser.cpp
+    src/xml/xml-parser.cpp \
+    tests/analysis/averageRestingPeriod.cpp
 
 
 SOURCES += \

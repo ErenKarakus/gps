@@ -153,6 +153,8 @@ seconds Track::averageRestingPeriod() const
 
     if (currentlyResting) ++numRestingPeriods;
 
+    if (numRestingPeriods == 0) throw std::domain_error("Cannot compute average resting period in a track containting no travelling.");
+
     return restingTime() / numRestingPeriods;
 }
 
