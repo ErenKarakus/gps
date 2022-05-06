@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE( AverageRestingPeriodNoRests )
     const Analysis::Track track {trackPoints, restingRange};
 
     std::chrono::seconds actualTime = track.travellingTime();
-    const std::chrono::seconds expectedOutcome (12);
+    std::chrono::seconds expectedOutcome (12);
 
     BOOST_CHECK_EQUAL( expectedOutcome.count(), actualTime.count() );
 }
